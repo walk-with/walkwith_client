@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Text} from 'react-native';
 
-declare var global: {HermesInternal: null | {}};
+// declare var global: {HermesInternal: null | {}};
 
 const App = () => {
   return (
