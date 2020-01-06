@@ -1,14 +1,9 @@
 import React from 'react';
-import {View, Text} from 'react-native';
-
+import AppNav from './nav/Navigator';
 // declare var global: {HermesInternal: null | {}};
 
 const App = () => {
-  return (
-    <View>
-      <Text>init</Text>
-    </View>
-  );
+  return <AppNav />;
 };
 
 export default App;
