@@ -1,13 +1,13 @@
 import React from 'react';
 import {View, Text} from 'react-native';
 
-const Home = () => {
+const Tab1 = () => {
   return (
     // eslint-disable-next-line react-native/no-inline-styles
     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <Text>Home Screen???</Text>
+      <Text>탭원</Text>
     </View>
   );
 };
 
-export default Home;
+export default Tab1;
