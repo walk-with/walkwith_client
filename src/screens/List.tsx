@@ -1,5 +1,5 @@
 import React, {ReactElement} from 'react';
-import {ScrollView} from 'react-native';
+import {ScrollView, Text} from 'react-native';
 import {ListItem} from 'react-native-elements';
 import homeStyle from '../styles/homeStyle';
 
@@ -65,6 +65,7 @@ export default function List({}: Props): ReactElement {
           leftAvatar={{source: {uri: l.avatar_url}}}
           title={l.name}
           subtitle={l.subtitle}
+          rightElement={<Text>9:00 ~ 12:00</Text>}
           bottomDivider
         />
       ))}
