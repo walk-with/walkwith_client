@@ -16,7 +16,7 @@ const isLoggedIn = true;
 
 function LoginStack() {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator headerMode="none">
       <Stack.Screen name="login" component={Login} />
       <Stack.Screen name="signup" component={Signup} />
     </Stack.Navigator>
@@ -35,7 +35,7 @@ const HomeTab = () => {
 function AppNav() {
   return (
     <NavigationNativeContainer>
-      {!isLoggedIn ? <LoginStack /> : <HomeTab />}
+      {isLoggedIn ? <LoginStack /> : <HomeTab />}
     </NavigationNativeContainer>
   );
 }
