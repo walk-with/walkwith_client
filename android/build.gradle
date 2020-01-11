@@ -30,6 +30,10 @@ allprojects {
             // Android JSC is installed from npm
             url("$rootDir/../node_modules/jsc-android/dist")
         }
+        // 네이버 지도 저장소
+        maven {
+            url 'https://navercorp.bintray.com/maps'
+        }
 
         google()
         jcenter()
