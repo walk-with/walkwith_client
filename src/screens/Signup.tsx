@@ -49,20 +49,29 @@ const Signup = props => {
       password,
     };
     let alert;
-    const res = await fetch('server/users/signup', {
-      method: 'post',
-      body: user,
-    });
-    if (res.status === 201) {
-      props.navgation.push('login');
-    } else {
-      if (res.status === 400) {
-        alert = '모든 정보를 입력해주세요.';
-      }
-      if (res.status === 409) {
-        alert = '이미 사용 중인 이메일입니다.';
+    let emptyInput = false;
+    for (let key in user) {
+      if (validator.isEmpty(user[key])) {
+        emptyInput = true;
       }
     }
+
+    if (emptyInput) {
+      alert = '모든 정보를 입력해주세요.';
+    } else {
+      const res = await fetch('server/users/signup', {
+        method: 'post',
+        body: user,
+      });
+      if (res.status === 201) {
+        props.navgation.push('login');
+      } else if (res.status === 409) {
+        alert = '이미 사용 중인 이메일입니다.';
+      } else {
+        alert = '잠시 후에 다시 시도해주세요.';
+      }
+    }
+
     alert ? Alert.alert(alert) : null;
   };
 
