@@ -9,6 +9,7 @@ import {connect} from 'react-redux';
 import {NavigationNativeContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {createIconSetFromFontello} from 'react-native-vector-icons';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -34,6 +35,7 @@ const HomeTab = () => {
 };
 
 function AppNav(props: any) {
+  console.log('v', props.token);
   return (
     <NavigationNativeContainer>
       {props.pending ? <HomeTab /> : props.token ? <HomeTab /> : <LoginStack />}

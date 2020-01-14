@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {connect} from 'react-redux';
 import {View, TextInput, Button} from 'react-native';
-import requestLogin from '../redux/user';
+import {requestLogin} from '../redux/user';
 
 function Login(props: any) {
   const [username, setUsername] = React.useState('');

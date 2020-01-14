@@ -7,7 +7,7 @@ const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 const LOGIN_FAILURE = 'LOGIN_FAILURE';
 
 function LoginAPI(email, pw) {
-  return fetch('http://localhost:4000/users/signin', {
+  return fetch('http://20b94a0a.ngrok.io/users/login', {
     body: JSON.stringify({
       email: email,
       password: pw,
@@ -26,9 +26,11 @@ export function requestLogin(email, pw) {
     return LoginAPI(email, pw)
       .then(res => res.json())
       .then(result => {
+        console.log('a', result);
         dispatch({type: LOGIN_SUCCESS, payload: result.token});
       })
       .catch(error => {
+        console.log('c', error);
         dispatch({type: LOGIN_FAILURE, payload: error});
       });
   };
@@ -49,17 +51,18 @@ export default handleActions(
       };
     },
     [LOGIN_SUCCESS]: (state, action) => {
+      console.log('n', action.payload);
       return {
         ...state,
         pending: false,
-        data: action.payload,
+        token: action.payload,
       };
     },
     [LOGIN_FAILURE]: (state, action) => {
       return {
         ...state,
         pending: false,
-        data: action.payload,
+        token: action.payload,
       };
     },
   },
