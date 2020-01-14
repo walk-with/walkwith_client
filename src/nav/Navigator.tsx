@@ -4,6 +4,7 @@ import Home from '../screens/Home';
 import Login from '../screens/Login';
 import Signup from '../screens/Signup';
 import Tab1 from '../screens/Tab1';
+import detailView from '../screens/DetailView';
 
 import {NavigationNativeContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -22,11 +23,18 @@ function LoginStack() {
     </Stack.Navigator>
   );
 }
-
+const HomeStack = () => {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="home" component={Home} />
+      <Stack.Screen name="detailView" component={detailView} />
+    </Stack.Navigator>
+  );
+};
 const HomeTab = () => {
   return (
     <Tab.Navigator>
-      <Tab.Screen name="home" component={Home} />
+      <Tab.Screen name="home" component={HomeStack} />
       <Tab.Screen name="tab1" component={Tab1} />
     </Tab.Navigator>
   );
@@ -35,7 +43,7 @@ const HomeTab = () => {
 function AppNav() {
   return (
     <NavigationNativeContainer>
-      {isLoggedIn ? <LoginStack /> : <HomeTab />}
+      {!isLoggedIn ? <LoginStack /> : <HomeTab />}
     </NavigationNativeContainer>
   );
 }
