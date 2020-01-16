@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {View} from 'react-native';
 import homeStyle from '../styles/homeStyle';
-import NaverMapView, {Marker, Coord} from 'react-native-nmap';
 import Geolocation from 'react-native-geolocation-service';
 
 interface Props {}
@@ -28,15 +27,6 @@ export default class Map extends Component<Props, State> {
 
   render() {
     const {coord} = this.state;
-    return (
-      <View style={homeStyle.mapStyle}>
-        <NaverMapView
-          style={homeStyle.mapViewStyle}
-          showsMyLocationButton={true}
-          center={coord}>
-          <Marker coordinate={coord} />
-        </NaverMapView>
-      </View>
-    );
+    return <View style={homeStyle.mapStyle} />;
   }
 }
