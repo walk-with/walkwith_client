@@ -5,15 +5,17 @@ import Login from '../screens/Login';
 import Signup from '../screens/Signup';
 import Tab1 from '../screens/Tab1';
 import detailView from '../screens/DetailView';
+import {connect} from 'react-redux';
 
 import {NavigationNativeContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {createIconSetFromFontello} from 'react-native-vector-icons';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
-const isLoggedIn = true;
+//const isLoggedIn = true;
 
 function LoginStack() {
   return (
@@ -40,12 +42,22 @@ const HomeTab = () => {
   );
 };
 
-function AppNav() {
+function AppNav(props: any) {
+  console.log('v', props.token);
   return (
     <NavigationNativeContainer>
-      {!isLoggedIn ? <LoginStack /> : <HomeTab />}
+      {props.pending ? <HomeTab /> : props.token ? <HomeTab /> : <LoginStack />}
     </NavigationNativeContainer>
   );
 }
 
-export default AppNav;
+function mapStateToProps(state: any) {
+  return {
+    pending: state.pending,
+    error: state.error,
+    token: state.token,
+  };
+}
+
+// eslint-disable-next-line prettier/prettier
+export default connect(mapStateToProps, null)(AppNav);
