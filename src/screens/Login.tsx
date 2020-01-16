@@ -24,11 +24,14 @@ function Login(props: any) {
         title="Sign in"
         onPress={() => props.requestLogin(username, password)}
       />
+      <Button
+        title="sign up"
+        onPress={() => props.navigation.navigate('signup')}
+      />
     </View>
   );
 }
 
-// const mapDispatchToProps = {requestLogin};
 function mapDispatchToProps(dispatch: any) {
   return {
     requestLogin: (email: string, pw: string) => {

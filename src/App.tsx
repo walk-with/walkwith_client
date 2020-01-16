@@ -3,6 +3,8 @@ import {Provider} from 'react-redux';
 import AppNav from './nav/Navigator';
 import store from './redux/configureStore';
 // declare var global: {HermesInternal: null | {}};
+import {Dimensions} from 'react-native';
+export const width = Dimensions.get('window').width;
 
 const App = () => {
   return (
