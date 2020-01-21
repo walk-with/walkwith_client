@@ -11,7 +11,7 @@ const DetailInfo = ({props}: Props) => {
   const {selectPet, selectedPet, list}: any = props;
   return (
     <View style={{flex: 1}}>
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View style={Style.section}>
           <WalkCard />
         </View>

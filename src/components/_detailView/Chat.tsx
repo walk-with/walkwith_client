@@ -50,6 +50,7 @@ const Chat = () => {
     <View style={ChatStyle.container}>
       <View style={ChatStyle.chatContainer}>
         <FlatList
+          showsVerticalScrollIndicator={false}
           keyExtractor={(item, index) => String(index)}
           inverted={true}
           data={chatArr}
