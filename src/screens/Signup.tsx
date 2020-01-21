@@ -1,95 +1,89 @@
 import React, {useState} from 'react';
 import {View, TextInput, Text, Alert} from 'react-native';
 import {Button} from 'react-native-elements';
-import {signup} from '../style';
+import Style from '../styles/signUp';
 import validator from 'validator';
 //입력값 없는 필드 서브밋 클릭시 체크할 것
-
-const Signup = props => {
+interface Props {
+  navigation: any;
+}
+const Signup = ({navigation}: Props) => {
   const [email, setEmail] = useState('');
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
   const [warning, setWarning] = useState({all: '', email: '', password: ''});
+  let isReadyToSubmit = undefined;
 
-  const validate = (data: string) => {
-    console.log('email', email);
-    let txt;
-    switch (data) {
-      case 'email':
-        if (!validator.isEmail(email)) {
-          txt = '이메일주소를 정확히 입력해주세요';
-        } else if (email === '' || validator.isEmail(email)) {
-          txt = '';
-        }
-        setWarning({...warning, email: txt});
-        break;
-      case 'password':
-        if (!validator.isLength(password, {min: 8, max: 14})) {
-          txt = '비밀번호는 8자 이상 14자 이하입니다.';
-        } else {
-          txt = '';
-        }
-        setWarning({
-          ...warning,
-          password: txt,
-        });
+  const validate = async () => {
+    console.log('email', email, 'pw', password);
+    let [warnEmail, warnPW] = ['', ''];
+    if (!validator.isEmail(email)) {
+      warnEmail = '이메일주소를 정확히 입력해주세요';
+    } else if (email === '' || validator.isEmail(email)) {
+      warnEmail = '';
     }
-  };
-
-  const setInput = async (text, fn) => {
-    console.log('text', text);
-    await fn(text);
-    console.log(email, userName, password);
+    if (!validator.isLength(password, {min: 8, max: 14})) {
+      warnPW = '비밀번호는 8자 이상 14자 이하입니다.';
+    } else {
+      warnPW = '';
+    }
+    isReadyToSubmit =
+      warnEmail.length === 0 && warnPW.length === 0 ? true : false;
+    await setWarning({...warning, email: warnEmail, password: warnPW});
   };
 
   const submit = async () => {
-    const user = {
-      email,
-      userName,
-      password,
-    };
+    validate();
     let alert;
-    let emptyInput = false;
-    for (let key in user) {
-      if (validator.isEmpty(user[key])) {
-        emptyInput = true;
-      }
-    }
 
-    if (emptyInput) {
-      alert = '모든 정보를 입력해주세요.';
+    if (!isReadyToSubmit) {
+      alert = '입력한 정보를 확인해주세요.';
     } else {
-      const res = await fetch('server/users/signup', {
-        method: 'post',
-        body: user,
-      });
-      if (res.status === 201) {
-        props.navgation.push('login');
-      } else if (res.status === 409) {
-        alert = '이미 사용 중인 이메일입니다.';
+      const user = {
+        email,
+        userName,
+        password,
+      };
+      let emptyInput = false;
+      for (let key in user) {
+        if (validator.isEmpty(user[key])) {
+          console.log(key);
+          emptyInput = true;
+        }
+      }
+
+      if (emptyInput) {
+        alert = '모든 정보를 입력해주세요.';
       } else {
-        alert = '잠시 후에 다시 시도해주세요.';
+        const res = await fetch('http://46f912f2.ngrok.io/users/signup', {
+          method: 'post',
+          body: user,
+        });
+        if (res.status === 201) {
+          navigation.push('login');
+        } else if (res.status === 409) {
+          alert = '이미 사용 중인 이메일입니다.';
+        } else {
+          alert = '잠시 후에 다시 시도해주세요.';
+        }
       }
     }
-
     alert ? Alert.alert(alert) : null;
   };
 
   return (
-    <View style={signup.container}>
-      <View style={signup.inputBox}>
+    <View style={Style.container}>
+      <View style={Style.inputBox}>
         <TextInput
           autoCapitalize="none"
-          style={signup.input}
+          style={Style.input}
           placeholder="EMAIL"
           keyboardType="email-address"
           autoCompleteType="email"
           autoFocus={true}
           onChangeText={text => {
-            setInput(text, setEmail);
-            validate('email');
+            setEmail(text);
           }}
-          onEndEditing={validate}
         />
         {warning.email ? (
           <Text
@@ -99,18 +93,19 @@ const Signup = props => {
         ) : null}
         <TextInput
           autoCapitalize="none"
-          style={signup.input}
+          style={Style.input}
           placeholder="USER NAME"
-          onChange={e => setInput(e.nativeEvent.text, setUserName)}
+          onChangeText={text => {
+            setUserName(text);
+          }}
         />
         <TextInput
           autoCapitalize="none"
-          style={signup.input}
+          style={Style.input}
           placeholder="PASSWORD"
           secureTextEntry={true}
           onChangeText={text => {
-            setInput(text, setPassword);
-            validate('password');
+            setPassword(text);
           }}
         />
         {warning.password ? (
@@ -124,7 +119,7 @@ const Signup = props => {
         buttonStyle={{borderRadius: 50}}
         containerStyle={{width: '50%'}}
         type="outline"
-        style={signup.submit}
+        style={Style.submit}
         title="회원가입"
         onPress={submit}
       />
