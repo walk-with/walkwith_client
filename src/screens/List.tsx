@@ -1,4 +1,4 @@
-import React, {ReactElement} from 'react';
+import React, {ReactElement, useState} from 'react';
 import {ScrollView, Text} from 'react-native';
 import {ListItem} from 'react-native-elements';
 import homeStyle from '../styles/homeStyle';
@@ -7,7 +7,8 @@ interface Props {
   navigation: any;
 }
 
-export default function List({navigation}: Props): ReactElement {
+function List({navigation}: Props): ReactElement {
+  const {selectedWalk, selectWalk} = useState({});
   const list = [
     {
       name: 'Amy Farha',
@@ -70,10 +71,12 @@ export default function List({navigation}: Props): ReactElement {
           rightElement={<Text>9:00 ~ 12:00</Text>}
           bottomDivider
           onPress={() => {
-            navigation.navigate('detailView');
+            navigation.navigate('detailView', {title: '테스트 워크 포스트'});
           }}
         />
       ))}
     </ScrollView>
   );
 }
+
+export default List;
