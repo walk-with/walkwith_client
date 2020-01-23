@@ -1,17 +1,23 @@
 import React, {Component} from 'react';
-import {View} from 'react-native';
+import {View, ActivityIndicator} from 'react-native';
 import Map from './Map';
 import List from './List';
 import homeStyle from '../styles/homeStyle';
 import {NavigationAction} from '@react-navigation/native';
+import {viewTab} from '../redux/navOption';
+import {connect} from 'react-redux';
+import {useIsFocused} from '@react-navigation/native';
 
-interface Props {
-  navigation: NavigationAction;
-}
 interface State {
   curMarker: number;
 }
-export default class Home extends Component<Props, State> {
+
+interface Props {
+  navigation: NavigationAction;
+  viewTabbar: Function;
+}
+
+class Home extends Component<Props, State> {
   list = [
     {
       name: '오구',
@@ -50,12 +56,30 @@ export default class Home extends Component<Props, State> {
   };
 
   render() {
+    const isFocused = useIsFocused();
+  let loaded = false;
+  const render = () => {
+    viewTabbar();
+    loaded = true;
+  };
+    isFocused ? render() : null;
     const {curMarker} = this.state;
-    return (
+    return loaded ? (
       <View style={homeStyle.home}>
         <Map list={this.list} changeCurMarker={this.changeCurMarker} />
         <List list={this.list} curMarker={curMarker} navigation={this.props.navigation}/>
       </View>
-    );
+    ): (
+    <View style={homeStyle.loading}>
+      <ActivityIndicator />
+    </View>
+  );
   }
 }
+  
+  const mapDispatchToProps = dispatch => ({
+  viewTabbar: () => dispatch(viewTab()),
+});
+
+export default connect(null, mapDispatchToProps)(Home);
+

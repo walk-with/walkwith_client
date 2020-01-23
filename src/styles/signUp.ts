@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native';
 
-const signup = StyleSheet.create({
+export default StyleSheet.create({
   container: {flex: 1, justifyContent: 'center', alignItems: 'center'},
   inputBox: {
     width: '75%',
@@ -21,5 +21,3 @@ const signup = StyleSheet.create({
     width: 100,
   },
 });
-
-export {signup};

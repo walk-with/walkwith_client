@@ -1,4 +1,4 @@
-import React, {ReactElement} from 'react';
+import React, {ReactElement, useState} from 'react';
 import {ScrollView, Text} from 'react-native';
 import {ListItem} from 'react-native-elements';
 import homeStyle from '../styles/homeStyle';
@@ -14,7 +14,10 @@ interface Props {
   navigation: any;
 }
 
+// const {selectedWalk, selectWalk} = useState({});
+ 
 export default function List({list, curMarker, navigation}: Props): ReactElement {
+
   return (
     <ScrollView style={homeStyle.listStyle}>
       {list.map((l, i) => (
@@ -27,10 +30,12 @@ export default function List({list, curMarker, navigation}: Props): ReactElement
           rightElement={<Text>9:00 ~ 12:00</Text>}
           bottomDivider
           onPress={() => {
-            navigation.navigate('detailView');
+            navigation.navigate('detailView', {title: '테스트 워크 포스트'});
           }}
         />
       ))}
     </ScrollView>
   );
 }
+
+export default List;
