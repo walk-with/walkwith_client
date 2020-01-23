@@ -11,9 +11,10 @@ interface Props {
     coord: {latitude: number; longitude: number};
   }>;
   curMarker: number;
+  navigation: any;
 }
 
-export default function List({list, curMarker}: Props): ReactElement {
+export default function List({list, curMarker, navigation}: Props): ReactElement {
   return (
     <ScrollView style={homeStyle.listStyle}>
       {list.map((l, i) => (
@@ -25,6 +26,9 @@ export default function List({list, curMarker}: Props): ReactElement {
           subtitle={l.subtitle}
           rightElement={<Text>9:00 ~ 12:00</Text>}
           bottomDivider
+          onPress={() => {
+            navigation.navigate('detailView');
+          }}
         />
       ))}
     </ScrollView>

@@ -1,12 +1,44 @@
-import React from 'react';
-import {View, Text} from 'react-native';
+import * as React from 'react';
+import {connect} from 'react-redux';
+import {View, TextInput, Button} from 'react-native';
+import {requestLogin} from '../redux/user';
 
-const Login = () => {
+function Login(props: any) {
+  const [username, setUsername] = React.useState('');
+  const [password, setPassword] = React.useState('');
+
   return (
     <View>
-      <Text>Login</Text>
+      <TextInput
+        placeholder="Username"
+        value={username}
+        onChangeText={setUsername}
+      />
+      <TextInput
+        placeholder="Password"
+        value={password}
+        onChangeText={setPassword}
+        secureTextEntry
+      />
+      <Button
+        title="Sign in"
+        onPress={() => props.requestLogin(username, password)}
+      />
+      <Button
+        title="sign up"
+        onPress={() => props.navigation.navigate('signup')}
+      />
     </View>
   );
-};
+}
 
-export default Login;
+function mapDispatchToProps(dispatch: any) {
+  return {
+    requestLogin: (email: string, pw: string) => {
+      dispatch(requestLogin(email, pw));
+    },
+  };
+}
+
+// eslint-disable-next-line prettier/prettier
+export default connect(null, mapDispatchToProps)(Login);

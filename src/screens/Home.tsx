@@ -3,8 +3,11 @@ import {View} from 'react-native';
 import Map from './Map';
 import List from './List';
 import homeStyle from '../styles/homeStyle';
+import {NavigationAction} from '@react-navigation/native';
 
-interface Props {}
+interface Props {
+  navigation: NavigationAction;
+}
 interface State {
   curMarker: number;
 }
@@ -51,7 +54,7 @@ export default class Home extends Component<Props, State> {
     return (
       <View style={homeStyle.home}>
         <Map list={this.list} changeCurMarker={this.changeCurMarker} />
-        <List list={this.list} curMarker={curMarker} />
+        <List list={this.list} curMarker={curMarker} navigation={this.props.navigation}/>
       </View>
     );
   }
