@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {ReactElement, useState} from 'react';
 import {View, ActivityIndicator} from 'react-native';
 import Map from './Map';
 import List from './List';
@@ -8,17 +8,13 @@ import {viewTab} from '../redux/navOption';
 import {connect} from 'react-redux';
 import {useIsFocused} from '@react-navigation/native';
 
-interface State {
-  curMarker: number;
-}
-
 interface Props {
   navigation: NavigationAction;
   viewTabbar: Function;
 }
 
-class Home extends Component<Props, State> {
-  list = [
+function Home({navigation, viewTabbar}: Props): ReactElement {
+  const list = [
     {
       name: '오구',
       avatar_url:
@@ -49,37 +45,34 @@ class Home extends Component<Props, State> {
     },
   ];
 
-  state = {curMarker: -1};
-
-  changeCurMarker = (id: number) => {
-    this.setState({curMarker: id});
+  const changeCurMarker = (id: number) => {
+    setCurMarker(id);
   };
 
-  render() {
-    const isFocused = useIsFocused();
+  const [curMarker, setCurMarker] = useState(-1);
+
+  const isFocused = useIsFocused();
   let loaded = false;
   const render = () => {
     viewTabbar();
     loaded = true;
   };
-    isFocused ? render() : null;
-    const {curMarker} = this.state;
-    return loaded ? (
-      <View style={homeStyle.home}>
-        <Map list={this.list} changeCurMarker={this.changeCurMarker} />
-        <List list={this.list} curMarker={curMarker} navigation={this.props.navigation}/>
-      </View>
-    ): (
+  isFocused ? render() : null;
+
+  return loaded ? (
+    <View style={homeStyle.home}>
+      <Map list={list} changeCurMarker={changeCurMarker} />
+      <List list={list} curMarker={curMarker} navigation={navigation} />
+    </View>
+  ) : (
     <View style={homeStyle.loading}>
       <ActivityIndicator />
     </View>
   );
-  }
 }
-  
-  const mapDispatchToProps = dispatch => ({
+
+const mapDispatchToProps = (dispatch: (arg0: {type: string}) => any) => ({
   viewTabbar: () => dispatch(viewTab()),
 });
 
 export default connect(null, mapDispatchToProps)(Home);
-
