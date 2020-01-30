@@ -15,9 +15,12 @@ interface Props {
 }
 
 // const {selectedWalk, selectWalk} = useState({});
- 
-export default function List({list, curMarker, navigation}: Props): ReactElement {
 
+export default function List({
+  list,
+  curMarker,
+  navigation,
+}: Props): ReactElement {
   return (
     <ScrollView style={homeStyle.listStyle}>
       {list.map((l, i) => (
@@ -37,5 +40,3 @@ export default function List({list, curMarker, navigation}: Props): ReactElement
     </ScrollView>
   );
 }
-
-export default List;
