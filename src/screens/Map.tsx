@@ -6,10 +6,12 @@ import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
 
 interface Props {
   list: Array<{
-    name: string;
-    avatar_url: string;
-    subtitle: string;
-    coord: {latitude: number; longitude: number};
+    title: string;
+    Longitude: string;
+    Latitude: string;
+    time: string;
+    tag: string[];
+    image: string;
   }>;
   changeCurMarker: (id: number) => void;
 }
@@ -56,6 +58,7 @@ export default class Map extends Component<Props, State> {
             longitudeDelta,
           }}
           showsUserLocation={true}
+          // TODO: 지도 위치 바뀌면 다시 서버 요청하기
           onRegionChangeComplete={region => {
             this.setState({
               coord: {
@@ -66,30 +69,25 @@ export default class Map extends Component<Props, State> {
               longitudeDelta: region.longitudeDelta,
             });
           }}>
-          <Marker
-            key={4}
-            coordinate={{...coord}}
-            title={'움직여'}
-            description="this is a marker example"
-            onPress={e => {
-              // 문자 -> 숫자로 변환해서 state 변경
-              this.props.changeCurMarker(Number(e.nativeEvent.id));
-            }}
-            identifier={`${3}`}
-          />
-          {this.props.list.map((marker, i) => (
-            <Marker
-              key={i}
-              coordinate={{...marker.coord}}
-              title={marker.name}
-              description="this is a marker example"
-              onPress={e => {
-                // 문자 -> 숫자로 변환해서 state 변경
-                this.props.changeCurMarker(Number(e.nativeEvent.id));
-              }}
-              identifier={`${i}`}
-            />
-          ))}
+          {this.props.list.map((marker, i) => {
+            console.log(marker);
+            return (
+              <Marker
+                key={i}
+                // TODO: 위도 , 경도 순서 바뀜
+                coordinate={{
+                  longitude: Number(marker.Latitude),
+                  latitude: Number(marker.Longitude),
+                }}
+                title={marker.title}
+                description={marker.time}
+                onPress={e => {
+                  this.props.changeCurMarker(Number(e.nativeEvent.id));
+                }}
+                identifier={`${i}`}
+              />
+            );
+          })}
         </MapView>
       </View>
     );

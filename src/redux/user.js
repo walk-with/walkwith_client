@@ -7,7 +7,7 @@ const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 const LOGIN_FAILURE = 'LOGIN_FAILURE';
 
 function LoginAPI(email, pw) {
-  return fetch('http://20b94a0a.ngrok.io/users/login', {
+  return fetch('http://54.180.98.231:4000/users/login', {
     body: JSON.stringify({
       email: email,
       password: pw,

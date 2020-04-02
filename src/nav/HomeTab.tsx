@@ -4,6 +4,8 @@ import Home from '../screens/Home';
 import Tab1 from '../screens/Tab1';
 import detailView from '../screens/DetailView';
 import Mypage from '../screens/Mypage';
+import Enroll from '../screens/Enroll';
+import PetEdit from '../screens/PetEdit';
 
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -25,6 +27,28 @@ const HomeStack = () => {
   );
 };
 
+const MypageStack = () => {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="mypage"
+        component={Mypage}
+        options={{title: '마이페이지'}}
+      />
+      <Stack.Screen
+        name="enroll"
+        component={Enroll}
+        options={({route}: any) => ({title: route.params.title})}
+      />
+      <Stack.Screen
+        name="petEdit"
+        component={PetEdit}
+        options={({route}: any) => ({title: route.params.title})}
+      />
+    </Stack.Navigator>
+  );
+};
+
 const HomeTab = (props: any) => {
   return (
     <Tab.Navigator>
@@ -34,7 +58,7 @@ const HomeTab = (props: any) => {
         options={{tabBarVisible: props.tabBarVisible}}
       />
       <Tab.Screen name="tab1" component={Tab1} />
-      <Tab.Screen name="마이페이지" component={Mypage} />
+      <Tab.Screen name="마이페이지" component={MypageStack} />
     </Tab.Navigator>
   );
 };
