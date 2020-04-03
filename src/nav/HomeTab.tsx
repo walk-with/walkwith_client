@@ -4,6 +4,7 @@ import Home from '../screens/Home';
 import Tab1 from '../screens/Tab1';
 import detailView from '../screens/DetailView';
 import Mypage from '../screens/Mypage';
+import PostWalk from '../screens/PostWalk';
 
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -34,6 +35,7 @@ const HomeTab = (props: any) => {
         options={{tabBarVisible: props.tabBarVisible}}
       />
       <Tab.Screen name="tab1" component={Tab1} />
+      <Tab.Screen name="글쓰기" component={PostWalk} />
       <Tab.Screen name="마이페이지" component={Mypage} />
     </Tab.Navigator>
   );
