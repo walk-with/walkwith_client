@@ -13,9 +13,10 @@ const SelectMap: React.FC<{}> = ({}) => {
   const [latitudeDelta, setLatitudeDelta] = useState(0.0052);
   const [longitudeDelta, setLongitudeDelta] = useState(0.0025);
   const [address, setAddress] = useState('');
+  const key = '';
   const findAdress = () => {
     fetch(
-      `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=AIzaSyD5DcOIZbXs-LHc6tb67F1f4WXMc5PKObk`,
+      `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${key}`,
     )
       .then(res => res.json())
       .then(res => res.results[0].geometry.location)
